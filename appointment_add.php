@@ -1,9 +1,10 @@
-<?php 
-include 'config.php'; 
+<?php
+include 'config.php';
 
 $schedule = isset($_GET['schedule']) ? $_GET['schedule'] : '';
 
-function sanitize($inputs) {
+function sanitize($inputs)
+{
     $inputs = trim($inputs);
     $inputs = stripslashes($inputs);
     $inputs = htmlspecialchars($inputs);
@@ -58,8 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($errors)) {
         // Insert into the database
-        $addQuery = mysqli_query($db, "INSERT INTO appointment_list(owner_name, contact, email, address, category_id, breed, age, service_ids, schedule) 
-                                       VALUES ('$ownername','$contact','$email','$address','$category','$breed','$age','$service', '$schedule')");
+        $addQuery = mysqli_query($db, "INSERT INTO appointment_list(owner_name, contact, email, address, category_id, breed, age, service_ids, schedule) VALUES ('$ownername','$contact','$email','$address','$category','$breed','$age','$service', '$schedule')");
         if ($addQuery) {
             echo "<script>
                     alert('Appointment added successfully!');
@@ -96,7 +96,7 @@ if (!empty($errors)) {
             </div>
             <div class="form-group">
                 <label for="email" class="control-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
             </div>
             <div class="form-group">
                 <label for="address" class="control-label">Address</label>
@@ -109,11 +109,11 @@ if (!empty($errors)) {
                 <label for="category_id" class="control-label">Pet Type</label>
                 <select name="category_id" id="category_id" class="form-control">
                     <option value="" selected disabled>Select Pet Type</option>
-                    <?php 
+                    <?php
                     $categories = $db->query("SELECT * FROM category_list WHERE delete_flag = 0 ORDER BY name ASC");
-                    while($row = $categories->fetch_assoc()):
+                    while ($row = $categories->fetch_assoc()):
                     ?>
-                    <option value="<?= $row['id'] ?>"><?= ucwords($row['name']) ?></option>
+                        <option value="<?= $row['id'] ?>"><?= ucwords($row['name']) ?></option>
                     <?php endwhile; ?>
                 </select>
             </div>
